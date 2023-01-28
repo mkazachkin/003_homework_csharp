@@ -12,10 +12,10 @@ double secondNumber = double.Parse(Console.ReadLine()!)!;
 
 if (firstNumber > secondNumber)
 {
-    Console.WriteLine("Максимальное число из введенных " + firstNumber);    //We inform the user about which number
-}                                                                           //is greater 
+    Console.WriteLine("Максимальное число из введенных - " + firstNumber);    //We inform the user about maximum
+}
 else
 {
-    Console.WriteLine("Максимальное число из введенных " + secondNumber);
+    Console.WriteLine("Максимальное число из введенных - " + secondNumber);
 
 }

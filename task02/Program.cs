@@ -13,5 +13,5 @@ if ((firstNumber % 2) != 0)
 }
 else
 {
-    Console.WriteLine("Введенное число четное.");           //Number is odd
+    Console.WriteLine("Введенное число четное.");           //Number is even
 }

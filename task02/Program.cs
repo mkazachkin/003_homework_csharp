@@ -3,7 +3,7 @@
 // - 3->нет
 // 7->нет
 
-Console.Clear();                                            //Let's clear terminal to make look better
+Console.Clear();                                            //Let's clear terminal to make it look better
 Console.Write("Введите число: ");                           //Asking user for enter any number
 double firstNumber = double.Parse(Console.ReadLine()!)!;    //User may type any number, so we use double
 

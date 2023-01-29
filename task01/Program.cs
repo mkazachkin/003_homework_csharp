@@ -3,7 +3,7 @@
 //44 5 78 -> 78
 //22 3 9 -> 22
 
-Console.Clear();                                            //Let's clear terminal to make look better
+Console.Clear();                                            //Let's clear terminal to make it look better
 Console.Write("Введите первое число: ");                    //Asking user for enter any number
 double firstNumber = double.Parse(Console.ReadLine()!)!;    //User may type any number, so we use double
                                                             //as data type. Null values don't accepted

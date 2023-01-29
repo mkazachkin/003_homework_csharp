@@ -3,7 +3,7 @@
 //    a = 2 b = 10 -> max = 10
 //    a = -9 b = -3 -> max = -3
 
-Console.Clear();                                            //Let's clear terminal to make look better
+Console.Clear();                                            //Let's clear terminal to make it look better
 Console.Write("Введите первое число: ");                    //Ask user for enter any number
 double firstNumber = double.Parse(Console.ReadLine()!)!;    //User may type any number, so we use double
                                                             //as data type. Null values don't accepted

@@ -13,7 +13,7 @@ int max = +9999;
 //Диапазон задан маленьким, чтобы интереснее было с рандомом
 
 Console.Clear();
-Console.Write("Введите число: ");
+Console.Write($"Введите число от {min} до {max}: ");
 userNumber = Convert.ToInt32(NumberMakeProper(NumberInput(), min, max, true, true));
 
 result = userNumber;

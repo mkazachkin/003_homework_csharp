@@ -3,88 +3,82 @@
 // A (7,-5, 0); B (1,-1,9) -> 11.53
 
 //Инициализируем переменные
-double?[] checkX = new double?[2];
-double?[] checkY = new double?[2];
-double?[] checkZ = new double?[2];
-double[] x = new double[2];
-double[] y = new double[2];
-double[] z = new double[2];
-int counter;
+double x1, y1, z1, x2, y2, z2;
 double result;
+int max, min;
 
-counter = 0;
-//Введем координаты двух точек
-while (counter < 2)
-{
-    checkX[counter] = userNumInput($"Введите координату x{counter} в диапазоне от -99999 до +99999: ");
-    x[counter] = getOrGenerate(checkX[counter], -99999, +99999, true);
-    checkY[counter] = userNumInput($"Введите координату y{counter} в диапазоне от -99999 до +99999: ");
-    y[counter] = getOrGenerate(checkY[counter], -99999, +99999, true);
-    checkZ[counter] = userNumInput($"Введите координату z{counter} в диапазоне от -99999 до +99999: ");
-    z[counter] = getOrGenerate(checkZ[counter], -99999, +99999, true);
-    //Принудительно загоняем число в указанный  диапазон третим опциональным аргументом.
-    //Функция getOrGenerate доработана.
-    counter++;
-}
 Console.Clear();
-result = Math.Round(Math.Sqrt(Math.Pow(x[1] - x[0], 2) + Math.Pow(y[1] - y[0], 2) + Math.Pow(z[1] - z[0], 2)), 2);
-Console.WriteLine($"Расстояние между точками с координатами ({x[0]}, {y[0]}, {z[0]}) и ({x[1]}, {y[1]}, {z[1]}) составляет {result}");
+// Ограничимся диапазоном координат от -9999999 до +9999999
+max = 9999999;
+min = -9999999;
+
+Console.Write("Введите координату x1: ");
+x1 = NumberMakeProper(NumberInput(), min, max);
+
+Console.Write("Введите координату y1: ");
+y1 = NumberMakeProper(NumberInput(), min, max);
+
+Console.Write("Введите координату z1: ");
+z1 = NumberMakeProper(NumberInput(), min, max);
+
+Console.Write("Введите координату x2: ");
+x2 = NumberMakeProper(NumberInput(), min, max);
+
+Console.Write("Введите координату y2: ");
+y2 = NumberMakeProper(NumberInput(), min, max);
+
+Console.Write("Введите координату z2: ");
+z2 = NumberMakeProper(NumberInput(), min, max);
+
+result = Math.Round(Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2) + Math.Pow(z2 - z1, 2)), 2);
+Console.Clear();
+Console.WriteLine($"Координаты точек:\n1. ({x1}, {y1}, {z1})\n2. ({x2}, {y2}, {z2})\nРасстояние между точками: {result}.");
 
 //------------------------------------
 //----- Пользовательские функции -----
 //------------------------------------
 
-// Функция перевода строки пользователя в число. Может вернуть null
-double? userNumInput(string welcomeText = "Введите строку: ")
+double? NumberInput()
+//Запрашивает пользовательский ввод в консоли.
+//Возвращает либо число, либо null в зависимости от того, что ввел пользователь
 {
-    // Инициализация переменных
-    double resultNum;                   // Вернем в ней ответ
-    bool resultTest;                    // Проверим, возможно ли преобразование типов
-    string? resultString;               // Строка, введенная пользователем
+    //Инициализация переменных
+    double resultDigitInput;
+    bool resultTest;
+    string? resultString;
 
-    Console.Write(welcomeText);         // Выводим приглашение на ввод числа
-    resultString = Console.ReadLine();  // Получаем строку
+    resultString = Console.ReadLine();
 
-    // Начинаем обработку
-    if ((resultString == null) || (resultString == ""))
-    {
-        return null;                    // Возвращаем null, т. к. мы не получили на вводе число
-    }
+    if ((resultString == null) || (resultString == "")) return null;
     else
     {
-        // Вечная проблема с десятичными точками и запятыми. В России меняем точки на запятые
+        //Вечная проблема с десятичными точками и запятыми.
         resultString = resultString.Replace(".", ",");
-        // Попробуем парсить в double
-        resultTest = double.TryParse(resultString, out resultNum);
-        if (!resultTest)
-        {
-            return null;                // Возвращаем null, т. к. мы не получили на вводе число            
-        }
-        else
-        {
-            return resultNum;           // Возвращаем число
-        }
+        resultTest = double.TryParse(resultString, out resultDigitInput);
+        if (!resultTest) return null;
+        else return resultDigitInput;
     }
 }
 
-// Проверяем введенное пользователем число, если оно введено неверно, то получаем число рандомом от Min до Max
-double getOrGenerate(double? someNum, int generateMin, int generateMax, bool forceRange = false)
+double NumberMakeProper(double? inputDigit, double min, double max, bool force = false, bool quiet = false)
+//Если в inputDigit null, то вернет произвольное число из диапазона min max
+//При включенном force проверит, попадает ли inputDigit в диапазон min max.
+//Если не попадает, считает, что inputDigit = null.
+//При включенном quiet не выводит сообщения в консоль.
 {
-    double theNum;                         // Число! Оно обязательно вернется.
-    // Оно там есть?
-    if ((someNum == null) || ((forceRange) && ((someNum < generateMin) || (someNum > generateMax))))
+    double theNum;
+    if ((inputDigit == null) || ((force) && ((inputDigit < min) || (inputDigit > max))))
     {
-        // Числа нет или оно вне диапазона. Получаем случайное число.
-        Console.WriteLine("Введенное число не может быть обработано.");
-        theNum = new Random().Next(generateMin, generateMax + 1);
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine($"Число {theNum} было сгенерировано автоматически.");
-        Console.ResetColor();
+        theNum = new Random().NextDouble() * (max - min) + min;
+        if (!quiet)
+        {
+            Console.Write("Введенное число не может быть обработано.\nЧисло ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(theNum);
+            Console.ResetColor();
+            Console.WriteLine(" было сгенерировано автоматически.");
+        }
     }
-    else
-    {
-        // someNum у нас double?, поэтому конвертируем в Int32 и работаем с ним.
-        theNum = someNum.Value;
-    }
+    else theNum = inputDigit.Value;
     return theNum;
 }

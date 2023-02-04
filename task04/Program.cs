@@ -54,11 +54,11 @@ double NumberMakeProper(double? inputDigit, double min, double max, bool force =
 //Произвольное число возвращает в диапазоне от min до max и от -max до min. 
 //      По-умолчанию выключено.
 {
-    double theNum;
+    double theNum = inputDigit ?? 0.0;
     bool flag = false;
     if (inputDigit == null) flag = true;
-    if ((!flag) && (force) && (absCheck) && ((Math.Abs(inputDigit.Value) < min) || (Math.Abs(inputDigit.Value) > max))) flag = true;
-    if ((!flag) && (force) && (!absCheck) && ((inputDigit.Value < min) || (inputDigit.Value > max))) flag = true;
+    if ((!flag) && (force) && (absCheck) && ((Math.Abs(theNum) < min) || (Math.Abs(theNum) > max))) flag = true;
+    if ((!flag) && (force) && (!absCheck) && ((theNum < min) || (theNum > max))) flag = true;
     if (flag)
     {
         theNum = new Random().NextDouble() * (max - min) + min;
@@ -76,6 +76,5 @@ double NumberMakeProper(double? inputDigit, double min, double max, bool force =
             Console.WriteLine(" было сгенерировано автоматически.");
         }
     }
-    else theNum = inputDigit.Value;
     return theNum;
 }

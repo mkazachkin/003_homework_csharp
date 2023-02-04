@@ -60,16 +60,29 @@ double? NumberInput()
     }
 }
 
-double NumberMakeProper(double? inputDigit, double min, double max, bool force = false, bool quiet = false)
+double NumberMakeProper(double? inputDigit, double min, double max, bool force = false, bool quiet = false, bool absCheck = false)
 //Если в inputDigit null, то вернет произвольное число из диапазона min max
-//При включенном force проверит, попадает ли inputDigit в диапазон min max.
-//Если не попадает, считает, что inputDigit = null.
+//При включенном force проверит, число не попадающее в диапазон игнорирует и возвращает произвольное от min max.
+//      По-умолчанию выключено.
 //При включенном quiet не выводит сообщения в консоль.
+//      По-умолчанию выключено. 
+//При включенном absChek проверяет диапазон по модулю.
+//Произвольное число возвращает в диапазоне от min до max и от -max до min. 
+//      По-умолчанию выключено.
 {
     double theNum;
-    if ((inputDigit == null) || ((force) && ((inputDigit < min) || (inputDigit > max))))
+    bool flag = false;
+    if (inputDigit == null) flag = true;
+    if ((!flag) && (force) && (absCheck) && ((Math.Abs(inputDigit.Value) < min) || (Math.Abs(inputDigit.Value) > max))) flag = true;
+    if ((!flag) && (force) && (!absCheck) && ((inputDigit.Value < min) || (inputDigit.Value > max))) flag = true;
+    if (flag)
     {
         theNum = new Random().NextDouble() * (max - min) + min;
+        if (absCheck)
+        {
+            int minus = new Random().Next(0, 2);
+            if (minus == 0) theNum = theNum * (-1);
+        }
         if (!quiet)
         {
             Console.Write("Введенное число не может быть обработано.\nЧисло ");

@@ -4,85 +4,78 @@
 // 782 -> 8
 // 918 -> 1
 
-// Очистка консоли и инициализация переменных
-Console.Clear();
 // Инициализируем переменные
-double? checkInput;                     // Сюда мы положим введенное "число" пользователя
 int userNumber;                         // Сюда мы положим число пользователя. Int меньше Double, так что скушает 
 int result;                             // В эту переменную мы поместим ответ.
+int min = 100;
+int max = 999;
 
-// Попробуем получить число, но может придти null
-checkInput = userNumInput("Введите трехзначное число: ");
-// Проверим число, если считать его не получилось, сгенерируем его в диапазоне от 100 до 999.
-userNumber = getOrGenerate(checkInput, 100, 999);
-
-// Нам нужно трехзначное число. Можно отрицательное, но трехзначное. Оно такое?
-if ((Math.Abs(userNumber) < 100) || (Math.Abs(userNumber) > 999))
-{
-    //Число не удовлетворяет условиям задачи. Прощаемся с пользователем
-    Console.WriteLine("Очень жаль, но введенное число не трехзначное.\nПопробуйте в следующий раз.");
-    Environment.Exit(1);
-}
+Console.Clear();
+Console.Write($"Введите число от {min} до {max} или от -{max} до -{min} : ");
+userNumber = Convert.ToInt32(NumberMakeProper(NumberInput(), min, max, true, true, true));
 
 // Решаем задачу.
 result = Math.Abs(((userNumber / 10) % 10));
-Console.WriteLine($"Вторая цифра введенного числа: {result}");
+Console.WriteLine($"Вторая цифра числа {userNumber}: {result}");
 
 //------------------------------------
 //----- Пользовательские функции -----
 //------------------------------------
 
-// Функция перевода строки пользователя в число. Может вернуть null
-double? userNumInput(string welcomeText = "Введите строку: ")
+double? NumberInput()
+//Запрашивает пользовательский ввод в консоли.
+//Возвращает либо число, либо null в зависимости от того, что ввел пользователь
 {
-    // Инициализация переменных
-    double resultNum;                   // Вернем в ней ответ
-    bool resultTest;                    // Проверим, возможно ли преобразование типов
-    string? resultString;               // Строка, введенная пользователем
+    //Инициализация переменных
+    double resultDigitInput;
+    bool resultTest;
+    string? resultString;
 
-    Console.Write(welcomeText);         // Выводим приглашение на ввод числа
-    resultString = Console.ReadLine();  // Получаем строку
+    resultString = Console.ReadLine();
 
-    // Начинаем обработку
-    if ((resultString == null) || (resultString == ""))
-    {
-        return null;                    // Возвращаем null, т. к. мы не получили на вводе число
-    }
+    if ((resultString == null) || (resultString == "")) return null;
     else
     {
-        // Вечная проблема с десятичными точками и запятыми. В России меняем точки на запятые
+        //Вечная проблема с десятичными точками и запятыми.
         resultString = resultString.Replace(".", ",");
-        // Попробуем парсить в double
-        resultTest = double.TryParse(resultString, out resultNum);
-        if (!resultTest)
-        {
-            return null;                // Возвращаем null, т. к. мы не получили на вводе число            
-        }
-        else
-        {
-            return resultNum;           // Возвращаем число
-        }
+        resultTest = double.TryParse(resultString, out resultDigitInput);
+        if (!resultTest) return null;
+        else return resultDigitInput;
     }
 }
 
-// Проверяем введенное пользователем число, если оно введено неверно, то получаем число рандомом от Min до Max
-int getOrGenerate(double? someNum, int generateMin, int generateMax)
+double NumberMakeProper(double? inputDigit, double min, double max, bool force = false, bool quiet = false, bool absCheck = false)
+//Если в inputDigit null, то вернет произвольное число из диапазона min max
+//При включенном force проверит, число не попадающее в диапазон игнорирует и возвращает произвольное от min max.
+//      По-умолчанию выключено.
+//При включенном quiet не выводит сообщения в консоль.
+//      По-умолчанию выключено. 
+//При включенном absChek проверяет диапазон по модулю.
+//Произвольное число возвращает в диапазоне от min до max и от -max до min. 
+//      По-умолчанию выключено.
 {
-    int theNum;                         // Число! Оно обязательно вернется.
-    // Оно там есть?
-    if (someNum == null)
+    double theNum;
+    bool flag = false;
+    if (inputDigit == null) flag = true;
+    if ((!flag) && (force) && (absCheck) && ((Math.Abs(inputDigit.Value) < min) || (Math.Abs(inputDigit.Value) > max))) flag = true;
+    if ((!flag) && (force) && (!absCheck) && ((inputDigit.Value < min) || (inputDigit.Value > max))) flag = true;
+    if (flag)
     {
-        // Числа нет. Получаем случайное число.
-        Console.WriteLine("Очень жаль, но введенное число не может быть обработано.\nЕсли вы считаете это ошибкой, пожалуйста, обратитесь в техническую поддержку.");
-        theNum = new Random().Next(generateMin, generateMax + 1);
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine($"Число {theNum} было сгенерировано автоматически.");
-        Console.ResetColor();
+        theNum = new Random().NextDouble() * (max - min) + min;
+        if (absCheck)
+        {
+            int minus = new Random().Next(0, 2);
+            if (minus == 0) theNum = theNum * (-1);
+        }
+        if (!quiet)
+        {
+            Console.Write("Введенное число не может быть обработано.\nЧисло ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(theNum);
+            Console.ResetColor();
+            Console.WriteLine(" было сгенерировано автоматически.");
+        }
     }
-    else
-    {
-        // someNum у нас double?, поэтому конвертируем в Int32 и работаем с ним.
-        theNum = Convert.ToInt32(someNum.Value);
-    }
+    else theNum = inputDigit.Value;
     return theNum;
 }

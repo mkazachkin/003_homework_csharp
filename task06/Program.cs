@@ -4,92 +4,72 @@
 // 7 -> да
 // 1 -> нет
 
-// Очистка консоли и инициализация переменных
-Console.Clear();
 // Инициализируем переменные
-double? checkInput;                     // Сюда мы положим введенное "число" пользователя
 int userNumber;                         // Сюда мы положим число пользователя. Int меньше Double, так что скушает 
-
-// Массивы на лекциях были. И раз уж функции используем, то и массивы тоже можно. Но решение без них
 string[] week = new string[7] { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" };
+int min = 1;
+int max = 7;
 
-// Попробуем получить число, но может придти null
-checkInput = userNumInput("Введите номер дня недели: ");
-// Проверим число, если считать его не получилось, сгенерируем его в диапазоне от 1 до 7.
-userNumber = getOrGenerate(checkInput, 1, 7);
-if ((userNumber > 7) || (userNumber < 1))
-{
-    // Нет такого дня недели. Сгенерируем число сами.
-    userNumber = getOrGenerate(null, 1, 7);
-}
+
+Console.Clear();
+Console.Write("Введите номер дня недели: ");
+userNumber = Convert.ToInt16(NumberMakeProper(NumberInput(), min, max, true, true));
+Console.Write($"{week[userNumber - 1]} - это {userNumber} день недели. ");
 
 //Пятница прошла, а понедельник не начался? Weekend!
 if ((userNumber > 5) && (userNumber < 8))
 {
     Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine($"{week[userNumber - 1]} - выходной.");
+    Console.WriteLine("Выходной.");
     Console.ResetColor();
 }
-else
-{
-    Console.WriteLine($"{week[userNumber - 1]} - рабочий день.");
-}
+else Console.WriteLine("Рабочий день.");
 
 //------------------------------------
 //----- Пользовательские функции -----
 //------------------------------------
 
-// Функция перевода строки пользователя в число. Может вернуть null
-double? userNumInput(string welcomeText = "Введите строку: ")
+double? NumberInput()
+//Запрашивает пользовательский ввод в консоли.
+//Возвращает либо число, либо null в зависимости от того, что ввел пользователь
 {
-    // Инициализация переменных
-    double resultNum;                   // Вернем в ней ответ
-    bool resultTest;                    // Проверим, возможно ли преобразование типов
-    string? resultString;               // Строка, введенная пользователем
+    //Инициализация переменных
+    double resultDigitInput;
+    bool resultTest;
+    string? resultString;
 
-    Console.Write(welcomeText);         // Выводим приглашение на ввод числа
-    resultString = Console.ReadLine();  // Получаем строку
+    resultString = Console.ReadLine();
 
-    // Начинаем обработку
-    if ((resultString == null) || (resultString == ""))
-    {
-        return null;                    // Возвращаем null, т. к. мы не получили на вводе число
-    }
+    if ((resultString == null) || (resultString == "")) return null;
     else
     {
-        // Вечная проблема с десятичными точками и запятыми. В России меняем точки на запятые
+        //Вечная проблема с десятичными точками и запятыми.
         resultString = resultString.Replace(".", ",");
-        // Попробуем парсить в double
-        resultTest = double.TryParse(resultString, out resultNum);
-        if (!resultTest)
-        {
-            return null;                // Возвращаем null, т. к. мы не получили на вводе число            
-        }
-        else
-        {
-            return resultNum;           // Возвращаем число
-        }
+        resultTest = double.TryParse(resultString, out resultDigitInput);
+        if (!resultTest) return null;
+        else return resultDigitInput;
     }
 }
 
-// Проверяем введенное пользователем число, если оно введено неверно, то получаем число рандомом от Min до Max
-int getOrGenerate(double? someNum, int generateMin, int generateMax)
+double NumberMakeProper(double? inputDigit, double min, double max, bool force = false, bool quiet = false)
+//Если в inputDigit null, то вернет произвольное число из диапазона min max
+//При включенном force проверит, попадает ли inputDigit в диапазон min max.
+//Если не попадает, считает, что inputDigit = null.
+//При включенном quiet не выводит сообщения в консоль.
 {
-    int theNum;                         // Число! Оно обязательно вернется.
-    // Оно там есть?
-    if (someNum == null)
+    double theNum;
+    if ((inputDigit == null) || ((force) && ((inputDigit < min) || (inputDigit > max))))
     {
-        // Числа нет. Получаем случайное число.
-        Console.WriteLine("Очень жаль, но введенное число не может быть обработано.\nЕсли вы считаете это ошибкой, пожалуйста, обратитесь в техническую поддержку.");
-        theNum = new Random().Next(generateMin, generateMax + 1);
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine($"Число {theNum} было сгенерировано автоматически.");
-        Console.ResetColor();
+        theNum = new Random().NextDouble() * (max - min) + min;
+        if (!quiet)
+        {
+            Console.Write("Введенное число не может быть обработано.\nЧисло ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(theNum);
+            Console.ResetColor();
+            Console.WriteLine(" было сгенерировано автоматически.");
+        }
     }
-    else
-    {
-        // someNum у нас double?, поэтому конвертируем в Int32 и работаем с ним.
-        theNum = Convert.ToInt32(someNum.Value);
-    }
+    else theNum = inputDigit.Value;
     return theNum;
 }

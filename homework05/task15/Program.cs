@@ -9,4 +9,4 @@ Console.Clear();
 double[] arr = DoubleArray.MakeCustom();    //Задаем массив случайных чисел
 DoubleArray.WriteLine(arr, format);
 double dif = DoubleArray.Max(arr) - DoubleArray.Min(arr);
-Console.WriteLine($"Разница между минимумом и максимумом в массиве равна {string.Format(format, dif)}.");
+Console.WriteLine($"Разница между максимумом и минимумом в массиве равна {string.Format(format, dif)}.");

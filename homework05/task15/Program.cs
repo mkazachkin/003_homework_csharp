@@ -3,14 +3,10 @@
 
 using Geekbrains;
 
-string format = "{0:F2}";
+string format = "{0:F2}";                   //Формат вывода чисел типа double
 Console.Clear();
 
-
-//Задаем массив случайных чисел
-double[] arr = DoubleArray.MakeCustom();
+double[] arr = DoubleArray.MakeCustom();    //Задаем массив случайных чисел
 DoubleArray.WriteLine(arr, format);
-//Считаем разницу между мминимальным и максимальным значением в массиве
 double dif = DoubleArray.Max(arr) - DoubleArray.Min(arr);
-//Console.WriteLine($"Разница между минимумом и максимумом в массиве равна {dif}.");
-Console.WriteLine(string.Format(format, dif));
+Console.WriteLine($"Разница между минимумом и максимумом в массиве равна {string.Format(format, dif)}.");

@@ -8,7 +8,7 @@ int[] arr;
 
 Console.Clear();
 
-//Задаем массив случайных чисел
+//Задаем массив целых случайных чисел
 arr = IntArray.MakeCustom();
 IntArray.WriteLine(arr);
 //Считаем количество четных чисел

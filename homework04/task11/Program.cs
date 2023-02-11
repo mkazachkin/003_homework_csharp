@@ -10,7 +10,6 @@ Console.WriteLine($"Сумма цифр этого числа равна {SumDig
 int SumDigits(int someNumber)
 {
     int result = 0;
-    int tempNumber;
     while (someNumber > 0)
     {
         result += someNumber % 10;

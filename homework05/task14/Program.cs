@@ -4,12 +4,10 @@
 
 using Geekbrains;
 
-int[] arr;
-
 Console.Clear();
 
 //Задаем массив случайных чисел
-arr = IntArray.MakeCustom();
+int[] arr = IntArray.MakeCustom();
 IntArray.WriteLine(arr);
 //Считаем сумму элементов на нечетных позициях
 Console.WriteLine($"Сумма нечетных элементов массива равна {IntArray.SumOddIndexes(arr)}.");

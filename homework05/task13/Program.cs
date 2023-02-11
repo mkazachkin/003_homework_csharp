@@ -4,12 +4,10 @@
 
 using Geekbrains;
 
-int[] arr;
-
 Console.Clear();
 
 //Задаем массив целых случайных чисел
-arr = IntArray.MakeCustom();
+int[] arr = IntArray.MakeCustom();
 IntArray.WriteLine(arr);
 //Считаем количество четных чисел
 Console.WriteLine($"Количество четных чисел в массиве: {IntArray.CountEven(arr)}.");

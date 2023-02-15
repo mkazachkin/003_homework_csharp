@@ -14,9 +14,9 @@ public class DoubleArray
     public static double[] MakeCustom()
     {
         //Запрашивает пользователя о параметрах массива и возвращает массив с этими параметрами
-        int siz = IntNumber.Input("Задайте размер массива");
-        double min = DoubleNumber.Input("Задайте минимальное число в массиве");
-        double max = DoubleNumber.Input("Задайте максимальное число в массиве");
+        int siz = Input.IntNum("Задайте размер массива");
+        double min = Input.DoubleNum("Задайте минимальное число в массиве");
+        double max = Input.DoubleNum("Задайте максимальное число в массиве");
         return DoubleArray.Make(siz, min, max);
     }
     public static double SumEvenIndexes(double[] someArray)
@@ -35,7 +35,7 @@ public class DoubleArray
         for (int i = 1; i < someArray.Length; i += 2) sum += someArray[i];
         return sum;
     }
-    public static void WriteLine(double[] array, string format = "{0:F8}")
+    public static void Print(double[] array, string format = "{0:F8}")
     {
         //Плолучает массив чисел и выводит его в консоль в виде [x1; x2..] в опционально указываемом формате
         Console.Write("[");
@@ -59,5 +59,18 @@ public class DoubleArray
         double min = array[0];
         for (int i = 1; i < array.Length; i++) if (min > array[i]) min = array[i];
         return min;
+    }
+    public static int LessOrEqual(double[] array, double boundaryNum = 0, bool boundaryEqual = true)
+    {
+        int count = 0;
+        if (boundaryEqual)
+        {
+            for (int i = 0; i < array.Length; i++) if (array[i] <= boundaryNum) count++;
+        }
+        else
+        {
+            for (int i = 0; i < array.Length; i++) if (array[i] < boundaryNum) count++;
+        }
+        return count;
     }
 }

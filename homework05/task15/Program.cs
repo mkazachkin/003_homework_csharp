@@ -7,6 +7,6 @@ string format = "{0:F2}";                   //Формат вывода чисе
 Console.Clear();
 
 double[] arr = DoubleArray.MakeCustom();    //Задаем массив случайных чисел
-DoubleArray.WriteLine(arr, format);
+DoubleArray.Print(arr, format);
 double dif = DoubleArray.Max(arr) - DoubleArray.Min(arr);
 Console.WriteLine($"Разница между максимумом и минимумом в массиве равна {string.Format(format, dif)}.");

@@ -14,9 +14,9 @@ public class IntArray
     public static int[] MakeCustom()
     {
         //Запрашивает пользователя о параметрах массива и возвращает массив с этими параметрами
-        int siz = IntNumber.Input("Задайте размер массива");
-        int min = IntNumber.Input("Задайте минимальное число в массиве");
-        int max = IntNumber.Input("Задайте максимальное число в массиве");
+        int siz = Input.IntNum("Задайте размер массива");
+        int min = Input.IntNum("Задайте минимальное число в массиве");
+        int max = Input.IntNum("Задайте максимальное число в массиве");
         return IntArray.Make(siz, min, max);
     }
     public static int CountEven(int[] someArray)
@@ -67,7 +67,7 @@ public class IntArray
         for (int i = 1; i < someArray.Length; i += 2) sum += someArray[i];
         return sum;
     }
-    public static void WriteLine(int[] array)
+    public static void Print(int[] array)
     {
         //Плолучает массив целых чисел и выводит его в консоль в виде [x1, x2..]
         Console.Write("[");

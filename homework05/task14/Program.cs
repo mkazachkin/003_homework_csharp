@@ -8,6 +8,6 @@ Console.Clear();
 
 //Задаем массив случайных чисел
 int[] arr = IntArray.MakeCustom();
-IntArray.WriteLine(arr);
+IntArray.Print(arr);
 //Считаем сумму элементов на нечетных позициях
 Console.WriteLine($"Сумма нечетных элементов массива равна {IntArray.SumOddIndexes(arr)}.");

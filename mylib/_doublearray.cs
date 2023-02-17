@@ -35,16 +35,17 @@ public class DoubleArray
         for (int i = 1; i < someArray.Length; i += 2) sum += someArray[i];
         return sum;
     }
-    public static void Print(double[] array, string format = "{0:F8}")
+    public static void Print(double[] array, int cellSize = 12, string format = "{0:F8}")
     {
         //Плолучает массив чисел и выводит его в консоль в виде [x1; x2..] в опционально указываемом формате
-        Console.Write("[");
+        string str;
         for (int i = 0; i < array.Length; i++)
         {
-            Console.Write(string.Format(format, array[i]));
-            if (i != (array.Length - 1)) Console.Write("; ");
+            str = string.Format(format, array[i]);
+            str = str.PadLeft(cellSize);
+            Console.Write(str);
         }
-        Console.WriteLine("]");
+        Console.WriteLine();
     }
     public static double Max(double[] array)
     {

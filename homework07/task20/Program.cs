@@ -18,7 +18,7 @@ int cellSize = 9;
 Console.Clear();
 
 double[,] array = Double2DArray.Make(row, col, min, max);
-Double2DArray.Print(array, cellSize, format);
+Double2DArray.Print(array, cellSize, format, ConsoleColor.White, ConsoleColor.Yellow);
 
 //Не стал оформлять отдельным методом, т. к. работаем с массивом вещественных чисел,
 //а по условию задачи должны быть целые. Так что работаем с целыми, но округляя на строчке 32.
@@ -33,4 +33,5 @@ for (int i = 0; i < col; i++)
     }
 }
 Console.WriteLine();
+Console.Write("  "); //Выравняем десятичную часть
 DoubleArray.Print(mid, cellSize, " {0:F1}");

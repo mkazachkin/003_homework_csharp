@@ -3,15 +3,15 @@
 // - 3->нет
 // 7->нет
 
-Console.Clear();                                            //Let's clear terminal to make it look better
-Console.Write("Введите число: ");                           //Asking user for enter any number
-double firstNumber = double.Parse(Console.ReadLine()!)!;    //User may type any number, so we use double
+using Geekbrains;
 
-if ((firstNumber % 2) != 0)
+Console.Clear();
+double num = Input.DoubleNum("Введите число");
+if ((num % 2) != 0)
 {
-    Console.WriteLine("Введенное число нечетное.");         //Number is odd 
+    Console.WriteLine("Введенное число нечетное.");
 }
 else
 {
-    Console.WriteLine("Введенное число четное.");           //Number is even
+    Console.WriteLine("Введенное число четное.");
 }

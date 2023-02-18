@@ -5,11 +5,20 @@ public class DoubleArray
     {
         //Принимает размер массива, а также минимальное и максимальное целое число в массиве.
         //Возвращает массив произвольных чисел типа double с указанными параметрами.
-        if (size < 1) size = 1;
-        if (max < min) { double tmp = max; max = min; min = tmp; }
-        double[] resArray = new double[size];
-        for (int i = 0; i < size; i++) resArray[i] = new Random().NextDouble() * (max - min) + min;
-        return resArray;
+        if (size < 1)
+        {
+            size = 1;
+        }
+        if (max < min)
+        {
+            double tmp = max; max = min; min = tmp;
+        }
+        double[] array = new double[size];
+        for (int i = 0; i < size; i++)
+        {
+            array[i] = new Random().NextDouble() * (max - min) + min;
+        }
+        return array;
     }
     public static double[] MakeCustom()
     {
@@ -19,33 +28,31 @@ public class DoubleArray
         double max = Input.DoubleNum("Задайте максимальное число в массиве");
         return DoubleArray.Make(siz, min, max);
     }
-    public static double SumEvenIndexes(double[] someArray)
+    public static double SumEvenIndexes(double[] array)
     {
         //Принимает массив чисел.
         //Возвращает сумму чисел на четных местах в массиве.
         double sum = 0;
-        for (int i = 0; i < someArray.Length; i += 2) sum += someArray[i];
+        for (int i = 0; i < array.Length; i += 2) sum += array[i];
         return sum;
     }
-    public static int SumOddIndexes(int[] someArray)
+    public static int SumOddIndexes(int[] array)
     {
         //Принимает массив чисел.
         //Возвращает сумму чисел на нечетных местах в массиве.
         int sum = 0;
-        for (int i = 1; i < someArray.Length; i += 2) sum += someArray[i];
+        for (int i = 1; i < array.Length; i += 2) sum += array[i];
         return sum;
     }
     public static void Print(double[] array, int cellSize = 12, string format = "{0:F8}")
     {
-        //Плолучает массив чисел и выводит его в консоль в виде [x1; x2..] в опционально указываемом формате
-        string str;
+        //Плолучает массив чисел и выводит его в консоль в опционально указываемом формате
+        string str = "";
         for (int i = 0; i < array.Length; i++)
         {
-            str = string.Format(format, array[i]);
-            str = str.PadLeft(cellSize);
-            Console.Write(str);
+            str += string.Format(format, array[i]).PadLeft(cellSize);
         }
-        Console.WriteLine();
+        Console.WriteLine(str);
     }
     public static double Max(double[] array)
     {

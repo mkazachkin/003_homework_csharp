@@ -19,64 +19,63 @@ public class IntArray
         int max = Input.IntNum("Задайте максимальное число в массиве");
         return IntArray.Make(siz, min, max);
     }
-    public static int CountEven(int[] someArray)
+    public static int CountEven(int[] array)
     {
         //Принимает массив целых чисел.
         //Возвращает количество четных чисел в массиве.
         int count = 0;
-        foreach (int el in someArray) if (el % 2 == 0) count++;
+        foreach (int el in array) if (el % 2 == 0) count++;
         return count;
     }
-    public static int SumEven(int[] someArray)
+    public static int SumEven(int[] array)
     {
         //Принимает массив целых чисел.
         //Возвращает сумму четных чисел в массиве.
         int sum = 0;
-        foreach (int el in someArray) if (el % 2 == 0) sum += el;
+        foreach (int el in array) if (el % 2 == 0) sum += el;
         return sum;
     }
-    public static int SumEvenIndexes(int[] someArray)
+    public static int SumEvenIndexes(int[] array)
     {
         //Принимает массив целых чисел.
         //Возвращает сумму чисел на четных местах в массиве.
         int sum = 0;
-        for (int i = 0; i < someArray.Length; i += 2) sum += someArray[i];
+        for (int i = 0; i < array.Length; i += 2) sum += array[i];
         return sum;
     }
-    public static int CountOdd(int[] someArray)
+    public static int CountOdd(int[] array)
     {
         //Принимает массив целых чисел.
         //Возвращает количество нечетных чисел в массиве.
         int count = 0;
-        foreach (int el in someArray) if (el % 2 != 0) count++;
+        foreach (int el in array) if (el % 2 != 0) count++;
         return count;
     }
-    public static int SumOdd(int[] someArray)
+    public static int SumOdd(int[] array)
     {
         //Принимает массив целых чисел.
         //Возвращает сумму нечетных чисел в массиве.
         int sum = 0;
-        foreach (int el in someArray) if (el % 2 != 0) sum += el;
+        foreach (int el in array) if (el % 2 != 0) sum += el;
         return sum;
     }
-    public static int SumOddIndexes(int[] someArray)
+    public static int SumOddIndexes(int[] array)
     {
         //Принимает массив целых чисел.
         //Возвращает сумму чисел на нечетных местах в массиве.
         int sum = 0;
-        for (int i = 1; i < someArray.Length; i += 2) sum += someArray[i];
+        for (int i = 1; i < array.Length; i += 2) sum += array[i];
         return sum;
     }
-    public static void Print(int[] array)
+    public static void Print(int[] array, int cellSize = 4)
     {
-        //Плолучает массив целых чисел и выводит его в консоль в виде [x1, x2..]
-        Console.Write("[");
+        //Плолучает массив целых чисел и выводит его в консоль
+        string str = "";
         for (int i = 0; i < array.Length; i++)
         {
-            Console.Write(array[i]);
-            if (i != (array.Length - 1)) Console.Write(", ");
+            str += $" {array[i]}".PadLeft(cellSize);
         }
-        Console.WriteLine("]");
+        Console.WriteLine(str);
     }
     public static int Max(int[] array)
     {

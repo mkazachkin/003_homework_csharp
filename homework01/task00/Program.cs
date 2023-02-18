@@ -3,16 +3,15 @@
 //    a = 2 b = 10 -> max = 10
 //    a = -9 b = -3 -> max = -3
 
-Console.Clear();                                            //Let's clear terminal to make it look better
-Console.Write("Введите первое число: ");                    //Ask user for enter any number
-double firstNumber = double.Parse(Console.ReadLine()!)!;    //User may type any number, so we use double
-                                                            //as data type. Null values don't accepted
-Console.Write("Введите второе число: ");                    //We repeat the similar operations for second number
-double secondNumber = double.Parse(Console.ReadLine()!)!;
+using Geekbrains;
+
+
+double firstNumber = Input.DoubleNum("Введите первое число");
+double secondNumber = Input.DoubleNum("Введите второе число");
 
 if (firstNumber > secondNumber)
 {
-    Console.WriteLine("Максимальное число из введенных - " + firstNumber);    //We inform the user about maximum
+    Console.WriteLine("Максимальное число из введенных - " + firstNumber);
 }
 else
 {

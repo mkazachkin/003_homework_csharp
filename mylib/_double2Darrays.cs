@@ -1,7 +1,11 @@
 namespace Geekbrains;
 public class Double2DArray
 {
-    public static double[,] Make(int rows, int cols, double min, double max)
+    public static double[,] Make(
+        int rows,
+        int cols,
+        double min,
+        double max)
     {
         //Принимает размер массива, а также минимальное и максимальное целое число в массиве.
         //Возвращает массив произвольных чисел типа double с указанными параметрами.
@@ -19,15 +23,15 @@ public class Double2DArray
             max = min;
             min = tmp;
         }
-        double[,] resArray = new double[rows, cols];
+        double[,] array = new double[rows, cols];
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
             {
-                resArray[i, j] = new Random().NextDouble() * (max - min) + min;
+                array[i, j] = new Random().NextDouble() * (max - min) + min;
             }
         }
-        return resArray;
+        return array;
     }
     public static double[,] MakeCustom()
     {
@@ -38,7 +42,12 @@ public class Double2DArray
         double max = Input.DoubleNum("Задайте максимальное число в массиве");
         return Double2DArray.Make(rows, cols, min, max);
     }
-    public static void Print(double[,] array, int cellSize = 12, string format = " {0:F2}")
+    public static void Print(
+        double[,] array,
+        int cellSize = 12,
+        string format = " {0:F2}",
+        ConsoleColor evenLineColor = ConsoleColor.White,
+        ConsoleColor oddLineColor = ConsoleColor.DarkGray)
     {
         //Выводит принятый массив вещественных чисел array в консоль в формате format
         //Ширина ячейки в символах cellSize 
@@ -48,11 +57,11 @@ public class Double2DArray
         {
             if (flag)
             {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.ForegroundColor = evenLineColor;
             }
             else
             {
-                Console.ResetColor();
+                Console.ForegroundColor = oddLineColor;
             }
             flag = !flag;
             str = "";
@@ -64,7 +73,10 @@ public class Double2DArray
         }
         Console.ResetColor();
     }
-    public static double? GetValue(double[,] array, int row, int col)
+    public static double? GetValue(
+        double[,] array,
+        int row,
+        int col)
     {
         //Возвращает значение в массиве, расположенное в ряду row и колонке col.
         //Если такой позиции нет, возвращает null

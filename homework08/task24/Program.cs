@@ -13,6 +13,14 @@ int sizeB = 2;
 int sizeC = 2;
 int min = 10;
 int max = 99;
+int uniqueValues = max - min + 1;
+bool[] checkValue = new bool[max - min + 1];
+int tmp;
+
+for (int i = 0; i < checkValue.Length; i++)
+{
+    checkValue[i] = false;
+}
 
 int[,,] matrix3d = new int[sizeA, sizeB, sizeC];
 for (int a = 0; a < sizeA; a++)
@@ -21,7 +29,13 @@ for (int a = 0; a < sizeA; a++)
     {
         for (int c = 0; c < sizeC; c++)
         {
-            matrix3d[a, b, c] = new Random().Next(min, max + 1);
+            //Проверка на уникальность
+            do
+            {
+                tmp = new Random().Next(min, max + 1);
+            } while (checkValue[tmp - min]);
+            checkValue[tmp - min] = true;
+            matrix3d[a, b, c] = tmp;
             Console.WriteLine($"{matrix3d[a, b, c]} ({a}, {b}, {c})");
         }
     }
